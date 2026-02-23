@@ -1,5 +1,7 @@
 package Mesagem;
-public class MensagemSMS extends Mensagem{
+import Interface.Prioritario;
+
+public class MensagemSMS extends Mensagem implements Prioritario{
 
     public MensagemSMS(String destinatario) {
         super(destinatario);
@@ -10,7 +12,13 @@ public class MensagemSMS extends Mensagem{
         System.out.println("Enviando SMS para: " + this.destinatario);
     }
 
-    public void enviar(String assunto) {
-        System.out.println(assunto);
+
+    @Override
+    public void definirPrioridade(int nivel) {
+        if (nivel > maxNivel) {
+            System.out.println("Erro, nível de prioridade máximo 10");
+        } else {
+            System.out.println("Prioridade definidade: " + nivel);
+        }
     }
 }
