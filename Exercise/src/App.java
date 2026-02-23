@@ -3,41 +3,41 @@ import Mesagem.MensagemEmail;
 import Mesagem.MensagemSMS;
 import Interface.Prioritario;
 import Interface.Agendavel;
+import java.util.Scanner;
 
 public class App {
-    public static void main(String[] args) throws Exception {
-        // 1. Criamos um Array do tipo da Classe Pai (Abstração/Herança)
-        // Isso nos permite guardar qualquer tipo de mensagem.
-        Mensagem[] listaMensagens = new Mensagem[2];
-        listaMensagens[0] = new MensagemEmail("eduardo@email.com");
-        listaMensagens[1] = new MensagemSMS("62981257540");
+    public static void main(String[] args) {
+        Scanner leitor = new Scanner(System.in);
+        Mensagem minhaMsg = null; // Começa vazia
 
-        System.out.println("=== SISTEMA DE NOTIFICAÇÕES ===\n");
+        System.out.println("Escolha o tipo de mensagem: (1) E-mail (2) SMS");
+        int opcao = leitor.nextInt();
+        leitor.nextLine(); // Limpa o buffer do teclado
 
-        // 2. Loop Polimórfico
-        for (Mensagem m : listaMensagens) {
-            
-            // Comportamento Comum: Todas as mensagens sabem enviar
-            m.enviar();
+        System.out.println("Digite o destinatário:");
+        String dest = leitor.nextLine();
 
-            // Comportamento por Interface: Nem todas têm prioridade ou agendamento
-            // Usamos 'instanceof' para verificar as "habilidades" de cada objeto
-            
-            if (m instanceof Prioritario) {
-                // Fazemos o Cast para acessar os métodos da Interface Prioritario
-                Prioritario p = (Prioritario) m;
-                p.definirPrioridade(Prioritario.maxNivel);
-            }
-
-            if (m instanceof Agendavel) {
-                // Fazemos o Cast para acessar os métodos da Interface Agendavel
-                Agendavel a = (Agendavel) m;
-                a.agendar("25/12/2026");
-                // Chamando o método default da interface
-                a.cancelarAgendamento();
-            }
-
-            System.out.println("--------------------------------");
+        // Polimorfismo na prática: a variável é 'Mensagem', 
+        // mas o objeto depende da escolha do usuário.
+        if (opcao == 1) {
+            minhaMsg = new MensagemEmail(dest);
+        } else if (opcao == 2) {
+            minhaMsg = new MensagemSMS(dest);
         }
+
+        // Execução dinâmica
+        if (minhaMsg != null) {
+            minhaMsg.enviar();
+            
+            // Se for E-mail, podemos pedir o agendamento
+            if (minhaMsg instanceof Agendavel) {
+                System.out.println("Digite a data para agendar:");
+                String data = leitor.nextLine();
+                ((Agendavel) minhaMsg).agendar(data);
+            }
+        }
+
+        leitor.close();
     }
 }
+   
