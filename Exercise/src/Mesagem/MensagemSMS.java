@@ -1,3 +1,4 @@
+package Mesagem;
 public class MensagemSMS extends Mensagem{
 
     public MensagemSMS(String destinatario) {

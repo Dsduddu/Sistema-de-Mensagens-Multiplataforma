@@ -1,3 +1,4 @@
+package Mesagem;
 public abstract class Mensagem {
     protected String destinatario;
 

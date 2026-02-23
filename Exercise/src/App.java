@@ -1,3 +1,5 @@
+import Mesagem.MensagemEmail;
+
 public class App {
     public static void main(String[] args) throws Exception {
         MensagemEmail minhaMsg = new MensagemEmail("eduardobrb1@gmail.com");

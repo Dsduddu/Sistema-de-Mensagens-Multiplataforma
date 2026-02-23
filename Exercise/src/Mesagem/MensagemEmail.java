@@ -1,3 +1,4 @@
+package Mesagem;
 public class MensagemEmail extends Mensagem{
 
     public MensagemEmail(String destinatario) {
